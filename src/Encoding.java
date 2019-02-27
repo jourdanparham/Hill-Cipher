@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -11,50 +10,70 @@ public class Encoding {
 
 	public static void main(String[] args) {
 		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter message: ");
+		String phrase = sc.nextLine();
 		
-		decode();
-		encode();
-		
-		int[] matrix = new int[10];
-		matrix = encode();
-		System.out.println("The matrix: " + Arrays.toString(matrix));
-		
-		String phrase = "math";
-		int[] encodedPhrase = new int [phrase.length()];
-		
-		int a = 15;
-		int b = 51;
-		int c = 73;
-		int d = 66;
-		
-		
-		for (int i= 0; i < matrix.length; i = i+2) {
-			encodedPhrase[i] = ((((a * matrix[i]) + (b * matrix[i+1])) % 95) + 32);
-			encodedPhrase[i+1] = ((((c * matrix[i]) + (d * matrix[i+1])) % 95) + 32);
-		}
-		
-		System.out.println("the main: " + Arrays.toString(encodedPhrase));
-		
-}
-	
-	public static void decode() {
-//		Scanner sc = new Scanner(System.in);
-//		System.out.println("Enter 'a' value: ");
-//		int a = sc.nextInt();
-//		System.out.println("Enter 'b' value: ");
-//		int b = sc.nextInt();
-//		System.out.println("Enter 'c' value: ");
-//		int c = sc.nextInt();
-//		System.out.println("Enter 'd' value: ");
-//		int d = sc.nextInt();
-//		System.out.println("Enter mod value: ");
-//		int mod = sc.nextInt();
+		System.out.println("Encode (E) or Decode (D)?");
+		String encodeDecode = sc.nextLine();
 		
 		int a = 3;
 		int b = 2;
 		int c = 1;
 		int d = 5;
+
+		if (encodeDecode.equals("E")) {
+			encode(phrase, a, b, c, d);
+		}
+	
+		//---------------------------------------------------------------------------------------------
 		
+		//CHANGE THIS SO THAT IT IS DYNAMIC (NOT HARD CODED)
+		int aInv = 15;
+		int bInv = 51;
+		int cInv = 73;
+		int dInv = 66;
+
+//		decode(phrase, aInv, bInv, cInv, dInv);
+		
+		if (encodeDecode.equals("D")) {
+			int[] matrix = new int[phrase.length()];
+			matrix = encode(phrase, a, b, c, d);
+			System.out.println("The matrix: " + Arrays.toString(matrix));
+			
+			
+			System.out.println("The updated matrix: " + Arrays.toString(matrix));
+
+			int[] encodedPhrase = new int [phrase.length()];
+
+			for (int i= 0; i < matrix.length; i = i+2) {
+				encodedPhrase[i] = ((((aInv * matrix[i]) + (bInv * matrix[i+1])) % 95) + 32);
+				encodedPhrase[i+1] = ((((cInv * matrix[i]) + (dInv * matrix[i+1])) % 95) + 32);
+			}
+
+			System.out.println("the encrypted message decoded in the main: " + Arrays.toString(encodedPhrase));
+
+			char[] ch = new char[phrase.length()];
+			String encodes = "";
+		
+			for(int i = 0; i < encodedPhrase.length; i++) {
+				ch[i] = (char) encodedPhrase[i];
+				encodes = new String(ch);
+			}
+			
+			System.out.println("The encrypted message [" + "] is now decoded: " + encodes);
+			
+		}
+		
+	
+}
+	// DECODE----------------------------------------------------------------------------------------------------------
+	public static int[][] decode(String phrase, int a, int b, int c, int d) {		
+		a = 3;
+		b = 2;
+		c = 1;
+		d = 5;
+//		
 		int mod = 95;
 		
 		// Generates the 2x2 array, encoding matrix
@@ -113,11 +132,16 @@ public class Encoding {
 		// iterate through 2d array and multiply inverse by matrix
 		for (int i = 0; i < decodeMatrix.length; i++) { 
 			for (int j = 0; j < decodeMatrix[i].length; j++) {
-				System.out.print((decodeMatrix[i][j] * inverse  % mod + mod) % mod + " ");
+				decodeMatrix[i][j] = (decodeMatrix[i][j] * inverse  % mod + mod) % mod;
+				// if statement to store new a, b, c, d values for the decoding matrix
+				System.out.print(decodeMatrix[i][j]);
 			}
 			System.out.println();
 			
 		}
+		return decodeMatrix;
+		
+	
 		
 //			for (int i= 0; i < position.length; i = i+2) {
 //				encodedPhrase[i] = (char)((((a * position[i]) + (b * position[i+1])) % 95) + 32);
@@ -129,44 +153,28 @@ public class Encoding {
 		
 	}
 	
-	public static int[] encode() {
-		// split string into characters
-//		Scanner sc = new Scanner(System.in);
-//		System.out.println("Enter message: ");
-//		String phrase = sc.nextLine();
+	// ENCODING ------------------------------------------------------------------------------------------------------------------
+	
+	public static int[] encode(String phrase, int a, int b, int c, int d) {
 		
-//		System.out.println("Enter 'a' value: ");
-//		int a = sc.nextInt();
-//		System.out.println("Enter 'b' value: ");
-//		int b = sc.nextInt();
-//		System.out.println("Enter 'c' value: ");
-//		int c = sc.nextInt();
-//		System.out.println("Enter 'd' value: ");
-//		int d = sc.nextInt();
-		
-		String phrase = "math";
-		
-		int a = 3;
-		int b = 2;
-		int c = 1;
-		int d = 5;
+//		a = 3;
+//		b = 2;
+//		c = 1;
+//		d = 5;
 		
 		
 		
 		String[] character = phrase.split("");
 		for(int i = 0; i < character.length; i++) {
-			System.out.println(character[i]);
+//			System.out.println(character[i]);
 			
 			// use char to convert to unicode - unadjusted
 			char ch = phrase.charAt(i);
 			int pos = ch;
 //			System.out.println(pos);
 			
-		
-			
 			pos = pos + 32;
-			
-			System.out.println("CHAR 65 " + (char)65);
+//			System.out.println("CHAR 65 " + (char)65);
 		
 			
 		}
@@ -177,18 +185,11 @@ public class Encoding {
 		for(int i= 0; i < position.length; i++) {
 			position[i] = phrase.charAt(i);
 			
-			System.out.println("POS i " + position[i]);
+//			System.out.println("POS i " + position[i]);
 			// convert letters to numbers by subtracting 32 0 - 94; largest symbol is 94
 			position[i] = position[i] - 32;
 			// add 32 back later
 			
-			
-//			position[i] = ((position[i] - 32) % 126 - 32 + 1);
-			
-//			System.out.println(((position[i] - 32) % 126 - 32 + 1));
-			
-			// mod by 26
-			System.out.println(position[i]);
 				
 		}
 		
@@ -209,20 +210,21 @@ public class Encoding {
 				encodedPhrase[i] = (char)((((a * position[i]) + (b * position[i+1])) % 95) + 32);
 				encodedPhrase[i+1] = (char)((((c * position[i]) + (d * position[i+1])) % 95) + 32);
 				
-				matrixValue[i] = ((((a * position[i]) + (b * position[i+1])) % 95) + 32);
-				matrixValue[i+1] = ((((c * position[i]) + (d * position[i+1])) % 95) + 32);
+				matrixValue[i] = ((((a * position[i]) + (b * position[i+1])) % 95));
+				matrixValue[i+1] = ((((c * position[i]) + (d * position[i+1])) % 95));
 
 			}
 		}
 	
+		// Prints the coded phrase
 		System.out.println(Arrays.toString(encodedPhrase));
+		// Prints the position of the coded phrase
 		System.out.println(Arrays.toString(matrixValue));
 		
 		// convert encodedPhrase array to be a string
 		String encodedPhraseFinal = new String(encodedPhrase);
-		System.out.println(encodedPhraseFinal);
+		System.out.println("Your message  [" + phrase + "] is now encoded: " + encodedPhraseFinal);
 
-		
 		
 		// matrix multiplication
 //		int elem1 = a * position[0];
@@ -250,34 +252,8 @@ public class Encoding {
 		
 		// convert back by adding 32
 		
-		
-
-		
-		
-		// split array to string
-		
-		
-//		Scanner sc2 = new Scanner(System.in);
-//		System.out.println("Enter phrase to encode: ");
-//		String phrase = sc2.nextLine();
-//		
-//		System.out.println("Enter mod value: ");
-//		int mod = sc2.nextInt();
-
-	
-
-//	}
-	
-		
-		
-		
-		
 		return matrixValue;
-		
-		
-		
-		
-		
+
 		
 	}
 	
