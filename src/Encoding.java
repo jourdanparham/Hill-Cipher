@@ -174,6 +174,7 @@ public class Encoding {
 //			System.out.println(pos);
 			
 			pos = pos + 32;
+//			System.out.println(pos);
 //			System.out.println("CHAR 65 " + (char)65);
 		
 			
@@ -185,9 +186,10 @@ public class Encoding {
 		for(int i= 0; i < position.length; i++) {
 			position[i] = phrase.charAt(i);
 			
-//			System.out.println("POS i " + position[i]);
+			System.out.println("POS i " + position[i]);
 			// convert letters to numbers by subtracting 32 0 - 94; largest symbol is 94
 			position[i] = position[i] - 32;
+			System.out.println(position[i]);
 			// add 32 back later
 			
 				
