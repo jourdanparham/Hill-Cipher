@@ -1,7 +1,11 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-
+/**
+ * 
+ *  * Copyright (c) 2019 Jourdan Parham
+ *
+ */
 
 public class Encoding {
 	/**
@@ -28,13 +32,11 @@ public class Encoding {
 	
 		//---------------------------------------------------------------------------------------------
 		
-		//CHANGE THIS SO THAT IT IS DYNAMIC (NOT HARD CODED)
 		int aInv = 15;
 		int bInv = 51;
 		int cInv = 73;
 		int dInv = 66;
 
-//		decode(phrase, aInv, bInv, cInv, dInv);
 		
 		if (encodeDecode.equals("D")) {
 			int[] matrix = new int[phrase.length()];
@@ -108,15 +110,12 @@ public class Encoding {
 			// theoretically using denom^i works but its doesn't work programatically
 			ans = i * denom;
 			
-			// if denom^i mod 26 equals 1, then return denominator^i-1
+			
 			if (ans % mod == 1) {
-//				System.out.println("Answer: " + ans);
-//				System.out.println("i value: " + i);
-				
 				inverse = i;
 				inverse = inverse % mod;
-				System.out.println("Inverse: " + inverse);
-				System.out.println();
+//				System.out.println("Inverse: " + inverse);
+//				System.out.println();
 				
 			}
 		}
@@ -141,15 +140,6 @@ public class Encoding {
 		}
 		return decodeMatrix;
 		
-	
-		
-//			for (int i= 0; i < position.length; i = i+2) {
-//				encodedPhrase[i] = (char)((((a * position[i]) + (b * position[i+1])) % 95) + 32);
-//				encodedPhrase[i+1] = (char)((((c * position[i]) + (d * position[i+1])) % 95) + 32);
-//
-//			}
-	
-		
 		
 	}
 	
@@ -157,10 +147,6 @@ public class Encoding {
 	
 	public static int[] encode(String phrase, int a, int b, int c, int d) {
 		
-//		a = 3;
-//		b = 2;
-//		c = 1;
-//		d = 5;
 		
 		
 		
@@ -171,12 +157,9 @@ public class Encoding {
 			// use char to convert to unicode - unadjusted
 			char ch = phrase.charAt(i);
 			int pos = ch;
-//			System.out.println(pos);
 			
 			pos = pos + 32;
-//			System.out.println(pos);
-//			System.out.println("CHAR 65 " + (char)65);
-		
+
 			
 		}
 		
@@ -190,9 +173,7 @@ public class Encoding {
 			// convert letters to numbers by subtracting 32 0 - 94; largest symbol is 94
 			position[i] = position[i] - 32;
 			System.out.println(position[i]);
-			// add 32 back later
-			
-				
+			// add 32 back later	
 		}
 		
 		// matrix multiplication
@@ -219,19 +200,15 @@ public class Encoding {
 		}
 	
 		// Prints the coded phrase
-		System.out.println(Arrays.toString(encodedPhrase));
+//		System.out.println(Arrays.toString(encodedPhrase));
+		
 		// Prints the position of the coded phrase
-		System.out.println(Arrays.toString(matrixValue));
+//		System.out.println(Arrays.toString(matrixValue));
 		
 		// convert encodedPhrase array to be a string
 		String encodedPhraseFinal = new String(encodedPhrase);
 		System.out.println("Your message  [" + phrase + "] is now encoded: " + encodedPhraseFinal);
 
-		
-		// matrix multiplication
-//		int elem1 = a * position[0];
-//		System.out.println(elem1);
-		
 		
 		// encoding matrix check for no multiples of 5 or 19
 		int encodingMatrix [][] = 
